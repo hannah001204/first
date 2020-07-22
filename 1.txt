@@ -1,0 +1,33 @@
+package com.hi.hispring.repository;
+
+import com.hi.hispring.domain.Member;
+import net.bytebuddy.implementation.bind.MethodDelegationBinder;
+import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.Test;
+
+import java.nio.channels.FileChannel;
+
+import static org.assertj.core.api.Assertions.*;
+
+class MemoryMemberRepositoryTest {
+
+    MemoryMemberRepository repository = new MemoryMemberRepository();
+
+    @Test
+    public void save(){
+        Member member = new Member(); //
+        member.setName("spring");
+
+        repository.save(member);
+
+        Member result = repository.findById(member.getId()).get();
+        //.get();쓰는 이유-반환값이 optional이니까
+        //좋은 방법은 아닌데 테스트에서는 써라
+
+        //테스트 result랑 member랑 비교
+        assertThat(member).isEqualTo(result);
+
+        org.junit.jupiter.api.Assertions.assertEquals(member,result);
+    }
+}
+
